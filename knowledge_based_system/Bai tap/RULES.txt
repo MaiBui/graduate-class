@@ -1,27 +1,29 @@
 begin_rules
+
 	begin_group_rules
-		kind_rule = "mach dien noi tiep giua cac dien tro"
-		list_of_dien_tro: Array[DIEN_TRO]
+		kind_rule = "mach dien song song giua cac mach dien"
+		list_of_objects: Array[Object]
 		begin_rule  
 			 hypothesis_part:
-				 {["QH_NOI_TIEP_R_R", [{DIEN_TRO}]]}
+				 {["QH_SONG_SONG", list_of_objects]}
 		   end_hypothesis_part 
 		   goal_part:
-				{["QH_TUONG_DUONG",MACH_DIEN[[{DIEN_TRO}],"NT"]]}
+				{["QH_TUONG_DUONG",MACH_DIEN[[list_of_objects,"SS"]]}
 		   end_goal_part
 		end_rule
-	end_group_rules
+	end_group_rules		
 	
 	begin_group_rules
-		kind_rule = "mach dien song song giua cac dien tro"
-		list_of_dien_tro: Array[DIEN_TRO]
+		kind_rule = "mach dien noi tiep giua cac mach dien"
+		list_of_objects: Array[Object]
 		begin_rule  
 			 hypothesis_part:
-				 {["QH_SONG_SONG_R_R", [{DIEN_TRO}]]}
+				 {["QH_SONG_SONG", list_of_objects]}
 		   end_hypothesis_part 
 		   goal_part:
-				{["QH_TUONG_DUONG",MACH_DIEN[[{DIEN_TRO}],"SS"]]}
+				{["QH_TUONG_DUONG",MACH_DIEN[[list_of_objects,"NT"]]}
 		   end_goal_part
 		end_rule
-	end_group_rules	
+	end_group_rules		
+	
 end_rules
