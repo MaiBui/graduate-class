@@ -1,0 +1,7 @@
+begin_relations
+	[QH_NOI_TIEP_R_R,[{DIEN_TRO}]],{}
+	[QH_SONG_SONG_R_R,[{DIEN_TRO}]],{}
+	[QH_TUONG_DUONG,{MACH_DIEN}]
+	[QH_NOI_TIEP,[{QH_NOI_TIEP_R_R},{QH_SONG_SONG_R_R}]],{}
+	[QH_SONG_SONG,[{QH_NOI_TIEP_R_R},{QH_SONG_SONG_R_R}]],{}
+end_relations

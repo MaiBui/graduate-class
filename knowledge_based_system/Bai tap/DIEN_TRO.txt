@@ -1,0 +1,120 @@
+begin_concept: DIEN_TRO;
+
+  begin_variables
+	R_x: REAL;  
+	U_x: REAL;
+	I_x: REAL;
+	P_x: REAL;
+  end_variables
+
+  begin_constraints
+	R_x>0 OR R_x IS NULL;  
+	U_x>0 OR U_x IS NULL;
+	I_x>0 OR I_x IS NULL;
+	P_x>0 OR P_x IS NULL;
+  end_constraints 
+
+  begin_rules  
+	begin_group_rules
+		kind_rule = "tinh_toan_R";	
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.U_x, DIEN_TRO.I_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.R_x = DIEN_TRO.U_x / DIEN_TRO.I_x }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.P_x, DIEN_TRO.I_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.R_x = DIEN_TRO.P_x / (DIEN_TRO.I_x * DIEN_TRO.I_x)}
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.U_x, DIEN_TRO.P_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.R_x = (DIEN_TRO.U_x * DIEN_TRO.U_x)/DIEN_TRO.P_x}
+		  end_goal_part
+		end_rule			
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_U";	
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.R_x, DIEN_TRO.I_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.U_x = DIEN_TRO.R_x * DIEN_TRO.I_x }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.P_x, DIEN_TRO.I_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.U_x = DIEN_TRO.P_x / DIEN_TRO.I_x }
+		  end_goal_part
+		end_rule			
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_I";	
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.R_x, DIEN_TRO.U_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.I_x = DIEN_TRO.U_x / DIEN_TRO.R_x }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.P_x, DIEN_TRO.U_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.I_x = DIEN_TRO.P_x / DIEN_TRO.U_x }
+		  end_goal_part
+		end_rule			
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_P";	
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.I_x, DIEN_TRO.U_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.P_x = DIEN_TRO.U_x * DIEN_TRO.I_x }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.R_x, DIEN_TRO.I_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.P_x = DIEN_TRO.R_x * DIEN_TRO.I_x * DIEN_TRO.I_x }
+		  end_goal_part
+		end_rule	
+		begin_rule  
+		  hypothesis_part:  
+			{DIEN_TRO.U_x, DIEN_TRO.R_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{DIEN_TRO.P_x = DIEN_TRO.U_x * DIEN_TRO.U_x / DIEN_TRO.R_x }
+		  end_goal_part
+		end_rule	
+	end_group_rules
+	
+ end_rules
+
+
+end_concept
+
+
+

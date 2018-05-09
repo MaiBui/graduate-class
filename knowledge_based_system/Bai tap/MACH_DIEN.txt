@@ -1,0 +1,194 @@
+begin_concept: MACH_DIEN[list_MACH_DIEN, loai_mach_dien];
+
+  begin_variables
+	list_dien_tro: Array[DIEN_TRO]
+	loai_mach_dien: CHAR(2);	#SS: la mach song song, NT: la mach tuong duong
+	R_td: REAL;  
+	U_td: REAL;
+	I_td: REAL;
+	P_td: REAL;
+  end_variables
+
+  begin_constraints
+	R_td>0 OR R_td IS NULL;  
+	U_td>0 OR U_td IS NULL;
+	I_td>0 OR I_td IS NULL;
+	P_td>0 OR P_td IS NULL;
+  end_constraints 
+
+  begin_rules  
+	begin_group_rules
+		kind_rule = "tinh_toan_I_td_tu_cac_thanh_phan";
+		begin_rule  
+		  hypothesis_part:  
+			{list_dien_tro[].I_x,MACH_DIEN.loai_mach_dien='NT'}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.I_td = list_dien_tro[1].I_x  }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{list_dien_tro[].I_x,MACH_DIEN.loai_mach_dien='SS'}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.I_td = sum(list_dien_tro[i..n].I_x)  }
+		  end_goal_part
+		end_rule	
+	end_group_rules
+
+	begin_group_rules
+		kind_rule = "tinh_toan_R_td_tu_cac_thanh_phan";
+		begin_rule  
+		  hypothesis_part:  
+			{list_dien_tro[].R_x,MACH_DIEN.loai_mach_dien='NT'}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.R_td = sum(list_dien_tro[i..n].R_x) }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{list_dien_tro[].R_x,MACH_DIEN.loai_mach_dien='SS'}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.R_td = sum(1/list_dien_tro[i..n].I_x)  }
+		  end_goal_part
+		end_rule	
+	end_group_rules	
+
+	begin_group_rules
+		kind_rule = "tinh_toan_U_td_tu_cac_thanh_phan";
+		begin_rule  
+		  hypothesis_part:  
+			{list_dien_tro[].U_x,MACH_DIEN.loai_mach_dien='NT'}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.U_td = sum(list_dien_tro[i..n].U_x) }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{list_dien_tro[].U_x,MACH_DIEN.loai_mach_dien='SS'}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.U_td = list_dien_tro[1].U_x  }
+		  end_goal_part
+		end_rule	
+	end_group_rules	
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_I_td_tu_cac_thanh_phan";
+		begin_rule  
+		  hypothesis_part:  
+			{list_dien_tro[].I_x}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.I_td = list_dien_tro[1].I_x  }
+		  end_goal_part
+		end_rule
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_R_td";	
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.U_td, MACH_DIEN.I_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.R_td = MACH_DIEN.U_td / MACH_DIEN.I_td }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.P_td, MACH_DIEN.I_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.R_td = MACH_DIEN.P_td / (MACH_DIEN.I_td * MACH_DIEN.I_td)}
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.U_td, MACH_DIEN.P_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.R_td = (MACH_DIEN.U_td * MACH_DIEN.U_td)/MACH_DIEN.P_td}
+		  end_goal_part
+		end_rule			
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_U_td";	
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.R_td, MACH_DIEN.I_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.U_td = MACH_DIEN.R_td * MACH_DIEN.I_td }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.P_td, MACH_DIEN.I_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.U_td = MACH_DIEN.P_td / MACH_DIEN.I_td }
+		  end_goal_part
+		end_rule			
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_I_td";	
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.R_td, MACH_DIEN.U_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.I_td = MACH_DIEN.U_td / MACH_DIEN.R_td }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.P_td, MACH_DIEN.U_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.I_td = MACH_DIEN.P_td / MACH_DIEN.U_td }
+		  end_goal_part
+		end_rule			
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "tinh_toan_P_td";	
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.I_td, MACH_DIEN.U_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.P_td = MACH_DIEN.U_td * MACH_DIEN.I_td }
+		  end_goal_part
+		end_rule
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.R_td, MACH_DIEN.I_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.P_td = MACH_DIEN.R_td * MACH_DIEN.I_td * MACH_DIEN.I_td }
+		  end_goal_part
+		end_rule	
+		begin_rule  
+		  hypothesis_part:  
+			{MACH_DIEN.U_td, MACH_DIEN.R_td}
+		  end_hypothesis_part
+		  goal_part: 
+			{MACH_DIEN.P_td = MACH_DIEN.U_td * MACH_DIEN.U_td / MACH_DIEN.R_td }
+		  end_goal_part
+		end_rule	
+	end_group_rules
+	
+ end_rules
+
+
+end_concept
+
+
+
