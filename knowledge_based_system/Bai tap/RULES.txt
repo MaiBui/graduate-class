@@ -1,4 +1,29 @@
 begin_rules
+	begin_group_rules
+		kind_rule = "mach dien noi tiep giua cac dien tro"
+		list_of_dien_tro: Array[DIEN_TRO]
+		begin_rule  
+			 hypothesis_part:
+				 {["QH_NOI_TIEP_R_R", list_of_dien_tro]}
+		   end_hypothesis_part 
+		   goal_part:
+				{["QH_TUONG_DUONG",MACH_DIEN[list_of_dien_tro,"NT"]]}
+		   end_goal_part
+		end_rule
+	end_group_rules
+	
+	begin_group_rules
+		kind_rule = "mach dien song song giua cac dien tro"
+		list_of_dien_tro: Array[DIEN_TRO]
+		begin_rule  
+			 hypothesis_part:
+				 {["QH_SONG_SONG_R_R", list_of_dien_tro]}
+		   end_hypothesis_part 
+		   goal_part:
+				{["QH_TUONG_DUONG",MACH_DIEN[[list_of_dien_tro,"SS"]]}
+		   end_goal_part
+		end_rule
+	end_group_rules	
 
 	begin_group_rules
 		kind_rule = "mach dien song song giua cac mach dien"
